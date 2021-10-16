@@ -40,12 +40,27 @@ public class Main
 
         //////////////Получить массив элементов из строки//////////////////
 
-        String hello = "Hello world man vlad";
+        String hello = "Hello world man Vlad";
         String[] helloSplit = hello.split(" ");
 //        List<String> gg = Arrays.stream(hello.split(" ")).collect(Collectors.toList());
 //        String[] a = gg.toArray(new String[0]);
         System.out.println(Arrays.toString(helloSplit));
         System.out.println();
+
+        String hello2 = "Hello, world. Hello, Vlad";
+        String[] helloSplit2 = hello.split("(, | |\\. )");
+
+        //////////////////////Поиск цифр в тексте///////////////////////////////
+
+        String line = "2Th56is order was32354 placed 64for QT68 ! OK?";
+        String regex = "[^\\d]+";
+
+        String[] str2 = line.split(regex);
+        if(str2[0].equals(""))
+            System.arraycopy(str2, 1,  str2,0, str2.length - 1 );
+        System.out.println(Arrays.toString(str2));
+
+        int[] str2Int = Arrays.stream(str2).mapToInt(Integer::parseInt).toArray();
 
         ///////////////////////Отсортировать Map///////////////////////////
 
@@ -88,7 +103,7 @@ public class Main
 
         //System.out.println(Arrays.toString());
 
-        ///////////Найти самый часто встречающийся символ в строке///////////
+        ///Найти самый часто встречающийся символ в строке(без учета регистра)///
 
         String input = "Hellooo";
         input = input.toLowerCase();
@@ -103,6 +118,29 @@ public class Main
             }
         }
         System.out.println("MaxChar = " + maxChar);
+
+
+         /////////////////с учетом регистра////////////////////////////
+//        String word = "hello my name is wombat";
+//        int size = word.length();
+//        int max = 0;
+//        char maxChar = 'a';
+//        for (char x = 'A'; x <= 'z'; x++) {
+//            word = word.replace(String.valueOf(x), "");
+//            int newSize = word.length();
+//            if (size - newSize > max) {
+//                maxChar = x;
+//                max = size - newSize;
+//            }
+//            size = newSize;
+//        }
+//
+//        System.out.println("maxchar is " + maxChar);
+
+
+
+
+        ///////////////Поиск вхождения подстроки в текст////////////////////////
 
 
         String text =   "aabaabaaaaabaabaabaabbaaab";
