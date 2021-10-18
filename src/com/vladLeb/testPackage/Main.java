@@ -18,6 +18,14 @@ public class Main
 
     public static void main (String [] args)
     {
+
+        ///////////////////////число в массив чисел////////////////////////////
+        int num = 1234567;
+        int[] digits = Integer.toString(num).chars().map(c -> c-'0').toArray();
+
+
+
+        ///////////////////////////////////////////////////////////////////
         StringJoiner joiner = new StringJoiner(".", "prefix-", "-suffix");
         for (String s : "Hello the brave world".split(" ")) {
             joiner.add(s);
@@ -78,6 +86,7 @@ public class Main
                 ////sorted(Map.Entry.comparingByKey()).
                 forEach(System.out::println);
 
+
         ////////////////////////Отсортировать List////////////////////////////
 
         List<Integer> testList = List.of(1,3,2,4,7,6,5);
@@ -120,6 +129,7 @@ public class Main
         System.out.println("MaxChar = " + maxChar);
 
 
+
          /////////////////с учетом регистра////////////////////////////
 //        String word = "hello my name is wombat";
 //        int size = word.length();
@@ -138,73 +148,41 @@ public class Main
 //        System.out.println("maxchar is " + maxChar);
 
 
+        String strScobe = new String("{[]}()");
+
+        if(strScobe.equals("") || strScobe == null)
+            System.out.println("hueta");
+
+        Map<Character, Character> mapChar = new HashMap<>();
+        mapChar.put(']', '[');
+        mapChar.put(')', '(');
+        mapChar.put('}', '{');
+
+        Stack<Character> stackChar = new Stack<>();
+
+        for(int i = 0; i < strScobe.length(); i++){
+            char c = strScobe.charAt(i);
+            if(stackChar.empty()){
+                stackChar.push(c);
+            }else {
+                if (!mapChar.containsKey(c)){
+                    stackChar.push(c);
+                }else
+                    if (stackChar.peek() != mapChar.get(c)) {
+                        System.out.println("hueta");
+                    }else {
+                        stackChar.pop();
+                    }
 
 
-        ///////////////Поиск вхождения подстроки в текст////////////////////////
-
-
-        String text =   "aabaabaaaaabaabaabaabbaaab";
-        String sample = "aabaabc";
-
-        System.out.println(Arrays.toString(searchNaive(text, sample).toArray()));
-        System.out.println(Arrays.toString(prefixFunction(sample)));
-        System.out.println(Arrays.toString(KMPSearch(text, sample).toArray()));
-
-    }
-
-    static ArrayList<Integer> searchNaive(String text, String sample) {
-        ArrayList<Integer> foundPositions = new ArrayList<>();
-        for (int i = 0; i < text.length(); i++) {
-            int j = 0;
-            while (j < sample.length() && i + j < text.length() && sample.charAt(j) == text.charAt(i + j)) {
-                j++;
-            }
-            if (j == sample.length()) {
-                foundPositions.add(i);
-            }
-        }
-        return foundPositions;
-    }
-
-    static int[] prefixFunction(String sample) {
-        int [] values = new int[sample.length()];
-        for (int i = 1; i < sample.length(); i++) {
-            int j = 0;
-            while (i + j < sample.length() && sample.charAt(j) == sample.charAt(i + j)) {
-                values[i + j] = Math.max(values[i + j], j + 1);
-                j++;
-            }
-        }
-        return values;
-    }
-
-    public static ArrayList<Integer> KMPSearch(String text, String sample) {
-        ArrayList<Integer> found = new ArrayList<>();
-
-        int[] prefixFunc = prefixFunction(sample);
-
-        int i = 0;
-        int j = 0;
-
-        while (i < text.length()) {
-            if (sample.charAt(j) == text.charAt(i)) {
-                j++;
-                i++;
-            }
-            if (j == sample.length()) {
-                found.add(i - j);
-                j = prefixFunc[j - 1];
-            } else if (i < text.length() && sample.charAt(j) != text.charAt(i)) {
-                if (j != 0) {
-                    j = prefixFunc[j - 1];
-                } else {
-                    i = i + 1;
-                }
             }
         }
 
-        return found;
+
     }
+
+
+
 
 
 }
